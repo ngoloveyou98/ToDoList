@@ -1,21 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <comp-header />
+      
+      <WorkList v-bind:workOB="listWork" />
+      
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CompHeader from './components/ComHeader.vue'
+import WorkList from './components/WorkList.vue'
 
 export default {
-  created () {
+  data() {
+    return {
+      title:'this is tille',
+      listWork: [
+        { id: 1, content: "learn about install Vue CLI", status: false },
+        { id: 2, content: "content 2", status: true },
+        { id: 3, content: "content 3", status: false }
+      ]
+    };
   },
-  name: 'App',
+
+  name: "App",
   components: {
-    HelloWorld
+     CompHeader,
+     WorkList
   }
-}
+};
 </script>
 
 <style>
@@ -25,6 +38,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  
 }
 </style>
