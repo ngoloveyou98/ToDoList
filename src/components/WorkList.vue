@@ -5,6 +5,15 @@
     placeholder="What needs to be done" 
     @keyup.enter="addWork()" 
     v-model="newTodo">
+
+    <div class="done-todo">
+        <button type="button" class="btn btn-info" @click="doneAll()">
+          All
+        </button>
+        <button type="button" class="btn btn-info btn-clear" @click="clearAll()">
+          Clear
+        </button>
+    </div>
     <work v-for="work in workOB "
             :key="work.id"
             v-bind:dowork="work"
@@ -25,7 +34,7 @@ export default {
   data () {
     return {
       newTodo: '',
-      idForTodo: 4
+      idForTodo: 1
     }
   },
   name: "work-list",
@@ -53,7 +62,8 @@ export default {
         this.workOB.push({
             id: this.idForTodo,
             content: this.newTodo,
-            status:false
+            status:false,
+            editing:false
         });
         this.idForTodo++
         this.newTodo= ''
@@ -70,6 +80,14 @@ export default {
       },
       cancelContent(dataCancel){
         this.$emit('cancelContent',dataCancel)
+      },
+      doneAll(){
+         this.workOB.forEach(element => {    
+            element.status = true
+          });
+      },
+      clearAll(){
+         this.$emit('clearAll')
       }
       
   },
@@ -97,6 +115,11 @@ export default {
       background-color: burlywood;;
     }
   }
-
+  .done-todo{
+    margin-top: 5px;
+  }
+  .btn-clear{
+    margin-left: 5px;
+  }
 </style>>
 

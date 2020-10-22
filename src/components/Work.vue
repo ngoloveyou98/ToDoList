@@ -12,7 +12,7 @@
       <label  class="custom-control-label" 
         :for="dowork.id"
         >
-        <div v-if="!dowork.editing" @dblclick="editTodo(dowork.id)" :class="{complete: dowork.status}">
+        <div v-if="!dowork.editing"  :class="{complete: dowork.status}">
           {{ dowork.content }}
         </div>
         <div v-else>
@@ -23,6 +23,7 @@
           />
         </div>
       </label>
+      <b-icon icon="pencil" class="icon icon-edit" @click="editTodo(dowork.id)" ></b-icon>
       <b-icon icon="x-circle" scale="2" variant class="icon" @click="removeTodo(dowork.id)"></b-icon>
       
     </div>
@@ -74,6 +75,7 @@ export default {
       this.$emit('editTodo',id)
     },
     changeContent(dowork, $event){
+      
       if($event.target.value.trim() == ''){
         return
       }
@@ -85,7 +87,7 @@ export default {
     },
     cancelContent(beforEditCache,id){
       var dataCancel ={
-        id: id,dataCancel,
+        id: id,
         content: beforEditCache
       }
       this.$emit('cancelContent',dataCancel)
@@ -106,7 +108,12 @@ export default {
 }
 .icon {
   cursor: pointer;
-  float: right;
+  position: absolute;
+  right: 1px;
+  
+}
+.icon-edit{
+  right: 30px;
 }
 .todo-editing {
   margin-left: 100px;
