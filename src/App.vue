@@ -2,15 +2,7 @@
   <div id="app">
     <comp-header />
 
-    <WorkList
-      v-bind:workOB="listWork"
-      v-on:changeStatus="changeStatus"
-      v-on:remoteTodo="remoteTodo"
-      v-on:editTodo="editTodo"
-      v-on:changeContent="changeContent"
-      v-on:cancelContent="cancelContent"
-      v-on:clearAll="clearAll"
-    />
+    <WorkList />
   </div>
 </template>
 

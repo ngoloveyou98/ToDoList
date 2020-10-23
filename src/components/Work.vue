@@ -4,33 +4,34 @@
       <input
         type="checkbox"
         class="custom-control-input work-checkbox"
-        :id="dowork.id"
-        :checked="dowork.status"
-        @change="selectWork()"
+        :id="todo.id"
+        :checked="todo.done"
+        @change="doneTodoI(todo.id)"
       />
 
       <label  class="custom-control-label" 
-        :for="dowork.id"
+        :for="todo.id"
         >
-        <div v-if="!dowork.editing"  :class="{complete: dowork.status}">
-          {{ dowork.content }}
+        <div v-if="!todo.editing"  :class="{complete: todo.done}">
+          {{ todo.content }}
         </div>
         <div v-else>
-          <input v-focus type="text" :value="dowork.content" 
-          @keyup.enter="changeContent(dowork, $event)" 
-          @keyup.esc ="cancelContent(beforEditCache, dowork.id)"
+          <input v-focus type="text" :value="todo.content" 
+          @keyup.enter="changeContentI(todo.id, $event)"
+          @keyup.esc ="cancelContent(beforEditCache, todo.id)"
           class="input-hover"
           />
         </div>
       </label>
-      <b-icon icon="pencil" class="icon icon-edit" @click="editTodo(dowork.id)" ></b-icon>
-      <b-icon icon="x-circle" scale="2" variant class="icon" @click="removeTodo(dowork.id)"></b-icon>
+      <b-icon icon="pencil" class="icon icon-edit" @click="editTodo(todo.id)" ></b-icon>
+      <b-icon icon="x-circle" scale="2" variant class="icon" @click="deleteTodo(todo.id)"></b-icon>
       
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 export default {
   data () {
     return {
@@ -39,7 +40,7 @@ export default {
   },
   name: "work",
   props: {
-    dowork: {
+    todo: {
       type: Object,
       default() {
         return [];
@@ -57,41 +58,16 @@ export default {
     }
   },
   methods: {
-    selectWork() {
-      // console.log("event click");
-      var data = {
-        id: this.dowork.id,
-        content: this.dowork.content,
-        status: this.dowork.status
-      };
-      this.$emit("changeStatus", data);
+    ...mapActions(['doneTodo','deleteTodo','editTodo','changeContent']),
+    doneTodoI(id){
+      this.doneTodo(id)
     },
-    removeTodo(id) {
-      this.$emit("remoteTodo", id);
-    },
-    editTodo(id){
-      this.beforEditCache = this.dowork.content
+    changeContentI(id,$event){
       
-      this.$emit('editTodo',id)
-    },
-    changeContent(dowork, $event){
-      
-      if($event.target.value.trim() == ''){
-        return
-      }
-      var dataContent = {
-        id: dowork.id,
-        content: $event.target.value
-      }
-      this.$emit('changeContent',dataContent)
-    },
-    cancelContent(beforEditCache,id){
-      var dataCancel ={
-        id: id,
-        content: beforEditCache
-      }
-      this.$emit('cancelContent',dataCancel)
+      var content = $event.target.value
+      this.changeContent(id,content)
     }
+    
   },
   
 };
