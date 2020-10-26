@@ -30,9 +30,11 @@ export const store = new Vuex.Store({
         },
         edit_todo(state,idTodo){
            state.todos.forEach(elelment => {
+            elelment.editing = false
              if(elelment.id == idTodo){
                elelment.editing = !elelment.editing
              }
+             
            });
         },
         change_content(state,todo){
@@ -58,6 +60,9 @@ export const store = new Vuex.Store({
         },
         clear_all(state){
           state.todos = state.todos.filter(todo => !todo.done)
+        },
+        truncate(str){
+          return (str.length > 100) ? str.substr(0, 99) + '&hellip;' : str;
         }
     },
     actions:{
@@ -81,7 +86,11 @@ export const store = new Vuex.Store({
         },
         clearAll({commit}){
           commit('clear_all')
+        },
+        truncate({commit},str){
+          commit('truncate',str)
         }
+
     },
     modules:{
 

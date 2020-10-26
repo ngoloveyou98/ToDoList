@@ -9,7 +9,7 @@
         @change="doneTodoI(todo.id)"
       />
 
-      <label  class="custom-control-label" 
+      <label  class="custom-control-label label-content"
         :for="todo.id"
         >
         <div v-if="!todo.editing"  :class="{complete: todo.done}">
@@ -56,7 +56,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['doneTodo','deleteTodo','editTodo','changeContent']),
+    ...mapActions(['doneTodo','deleteTodo','editTodo','changeContent','truncate']),
     doneTodoI(id){
       this.doneTodo(id)
     },
@@ -91,6 +91,7 @@ export default {
 .work {
   margin-top: 10px;
   font-size: 20px;
+  
 }
 .work-checkbox {
   // font-size: 24px;
@@ -115,7 +116,9 @@ export default {
 .todo-list{
   background: blanchedalmond;
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px; 
+  max-height: 200px;
+  overflow: auto;
 }
 .input-hover{
   :hover{
