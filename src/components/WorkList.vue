@@ -3,75 +3,62 @@
     <h1>List Work</h1>
     <input type="text" class="todo-input" 
     placeholder="What needs to be done" 
-    @keyup.enter="addWork()" 
+    @keyup.enter="addTodoNew()" 
     v-model="newTodo">
-    <work v-for="work in workOB "
-            :key="work.id"
-            v-bind:dowork="work"
-            v-on:changeStatus="changeStatusWork"
-            v-on:remoteTodo="remoteTodo"
-            v-on:editTodo="editTodo"
-            v-on:changeContent="changeContent"
-            v-on:cancelContent="cancelContent"
-            class="hover"
-    />
+
+    <div class="done-todo">
+        <button type="button" class="btn btn-info" @click="doneAll()">
+          All
+        </button>
+        <button type="button" class="btn btn-info btn-clear" @click="clearAll()">
+          Clear
+        </button>
+    </div>
+    <div v-for="todo in allTodo "
+        :key="todo.id"
+        >
+        
+      <work v-bind:todo="todo" class="hover"/>
+    </div>
     
   </div>
 </template>
 
 <script>
-import work from "./Work";
+import work from "./Work.vue"
+import {mapActions} from 'vuex'
+import {mapGetters} from 'vuex'
+import {v1} from 'uuid'
 export default {
   data () {
     return {
       newTodo: '',
-      idForTodo: 4
     }
   },
   name: "work-list",
-  props: {
-    workOB: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
   components: {
     work
   },
+  computed:{
+      ...mapGetters(["allTodo"])
+  },
   methods:{
-      changeStatusWork(data){
+    ...mapActions(["addTodo"]),
+    addTodoNew(){
+      this.addTodo({
+          id: v1(),
+          content: this.newTodo,
+          done:false,
+          editing:false
+      })
+      this.newTodo = ''
+    },
+    changeStatusWork(data){
           var id = data.id
           this.$emit('changeStatus',id)
-      },
-      addWork(){
-        if(this.newTodo.trim().length == 0){
-          alert('aaa')
-          return
-        }
-        this.workOB.push({
-            id: this.idForTodo,
-            content: this.newTodo,
-            status:false
-        });
-        this.idForTodo++
-        this.newTodo= ''
-      },
-      remoteTodo(id){
-        var idTodo = id
-        this.$emit('remoteTodo',idTodo)
-      },
-      editTodo(id){
-          this.$emit('editTodo',id)
-      },
-      changeContent(dataContent){
-        this.$emit('changeContent',dataContent)
-      },
-      cancelContent(dataCancel){
-        this.$emit('cancelContent',dataCancel)
-      }
-      
+    },
+    
+    
   },
  
 };
@@ -97,6 +84,11 @@ export default {
       background-color: burlywood;;
     }
   }
-
+  .done-todo{
+    margin-top: 5px;
+  }
+  .btn-clear{
+    margin-left: 5px;
+  }
 </style>>
 

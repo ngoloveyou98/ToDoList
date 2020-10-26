@@ -2,14 +2,7 @@
   <div id="app">
     <comp-header />
 
-    <WorkList
-      v-bind:workOB="listWork"
-      v-on:changeStatus="changeStatus"
-      v-on:remoteTodo="remoteTodo"
-      v-on:editTodo="editTodo"
-      v-on:changeContent="changeContent"
-      v-on:cancelContent="cancelContent"
-    />
+    <WorkList />
   </div>
 </template>
 
@@ -22,9 +15,7 @@ export default {
     return {
       title: "this is tille",
       listWork: [
-        { id: 1, content: "learn about install Vue CLI", status: true, editing: false },
-        { id: 2, content: "content 2", status: true, editing: false },
-        { id: 3, content: "content 3", status: false, editing: false }
+      
       ]
     };
   },
@@ -50,9 +41,10 @@ export default {
       });
     },
     editTodo(id){
+      
       this.listWork.forEach(element => {
         if (element.id == id) {
-          element.editing = !element.editing;
+          element.editing = true;
         }
       });
     },
@@ -65,12 +57,17 @@ export default {
       });
     },
     cancelContent(dataCancel){
+      
       this.listWork.forEach(element => {
         if (element.id == dataCancel.id) {
+          
           element.content = dataCancel.content
           element.editing = false
         }
       });
+    },
+    clearAll(){
+      this.listWork = this.listWork.filter(list => !list.status)
     }
     
    
