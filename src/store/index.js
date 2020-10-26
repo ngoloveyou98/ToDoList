@@ -35,13 +35,29 @@ export const store = new Vuex.Store({
              }
            });
         },
-        change_content(state,idTodo,content){
-          state.todos.forEach(elelment =>{
-            if(elelment.id == idTodo){
-              elelment.content = content
-              console.log(content)
-            }
+        change_content(state,todo){
+          // state.todos.forEach(elelment =>{
+          //   if(elelment.id == todo.id){
+          //     elelment.content = todo.content
+          //     elelment.editing = false
+          //   }
+          // });
+
+          //c2
+
+          let index = state.todos.findIndex((t)=>t.id == todo.id)
+          if(index != -1){
+            state.todos[index] = todo
+          }
+        },
+
+        done_all(state){
+          state.todos.forEach(element =>{
+            element.done = true
           });
+        },
+        clear_all(state){
+          state.todos = state.todos.filter(todo => !todo.done)
         }
     },
     actions:{
@@ -57,8 +73,14 @@ export const store = new Vuex.Store({
         editTodo({commit},idTodo){
           commit('edit_todo', idTodo)
         },
-        changeContent({commit},idTodo,content){
-          commit('change_content',idTodo,content)
+        changeContent({commit},todo){
+          commit('change_content',todo)
+        },
+        doneAll({commit}){
+          commit('done_all')
+        },
+        clearAll({commit}){
+          commit('clear_all')
         }
     },
     modules:{

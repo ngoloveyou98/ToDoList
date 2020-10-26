@@ -43,7 +43,7 @@ export default {
       ...mapGetters(["allTodo"])
   },
   methods:{
-    ...mapActions(["addTodo"]),
+    ...mapActions(["addTodo","doneAll","clearAll"]),
     addTodoNew(){
       this.addTodo({
           id: v1(),
@@ -53,12 +53,7 @@ export default {
       })
       this.newTodo = ''
     },
-    changeStatusWork(data){
-          var id = data.id
-          this.$emit('changeStatus',id)
-    },
-    
-    
+   
   },
  
 };
