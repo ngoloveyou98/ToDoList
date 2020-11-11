@@ -1,87 +1,60 @@
 <template>
   <div id="app">
-    <comp-header />
-
-    <WorkList />
+    <router-view></router-view>
   </div>
 </template>
 
-<script>
-import CompHeader from "./components/ComHeader.vue";
-import WorkList from "./components/WorkList.vue";
-
+// <script>
+// import Home from './components/view/Home'
 export default {
-  data() {
-    return {
-      title: "this is tille",
-      listWork: [
-      
-      ]
-    };
-  },
-
-  name: "App",
   components: {
-    CompHeader,
-    WorkList
-  },
-  methods: {
-    changeStatus(id) {
-      this.listWork.forEach(element => {
-        if (element.id == id) {
-          element.status = !element.status;
-        }
-      });
-    },
-    remoteTodo(idTodo) {
-      this.listWork.forEach((value, index) => {
-        if (value.id == idTodo) {
-          this.listWork.splice(index, 1);
-        }
-      });
-    },
-    editTodo(id){
-      
-      this.listWork.forEach(element => {
-        if (element.id == id) {
-          element.editing = true;
-        }
-      });
-    },
-    changeContent(dataContent){
-      this.listWork.forEach(element => {
-        if (element.id == dataContent.id) {
-          element.content = dataContent.content
-          element.editing = false
-        }
-      });
-    },
-    cancelContent(dataCancel){
-      
-      this.listWork.forEach(element => {
-        if (element.id == dataCancel.id) {
-          
-          element.content = dataCancel.content
-          element.editing = false
-        }
-      });
-    },
-    clearAll(){
-      this.listWork = this.listWork.filter(list => !list.status)
-    }
-    
-   
+    // Home
   }
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
-  font-size: 20px;
+[class*="col-"] {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {
+    width: 8.33%;
+  }
+  .col-2 {
+    width: 16.66%;
+  }
+  .col-3 {
+    width: 25%;
+  }
+  .col-4 {
+    width: 33.33%;
+  }
+  .col-5 {
+    width: 41.66%;
+  }
+  .col-6 {
+    width: 50%;
+  }
+  .col-7 {
+    width: 58.33%;
+  }
+  .col-8 {
+    width: 66.66%;
+  }
+  .col-9 {
+    width: 75%;
+  }
+  .col-10 {
+    width: 83.33%;
+  }
+  .col-11 {
+    width: 91.66%;
+  }
+  .col-12 {
+    width: 100%;
+  }
 }
 </style>

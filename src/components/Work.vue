@@ -9,7 +9,7 @@
         @change="doneTodoI(todo.id)"
       />
 
-      <label  class="custom-control-label" 
+      <label  class="custom-control-label label-content"
         :for="todo.id"
         >
         <div v-if="!todo.editing"  :class="{complete: todo.done}">
@@ -17,8 +17,8 @@
         </div>
         <div v-else>
           <input v-focus type="text" :value="todo.content" 
-          @keyup.enter="changeContentI(todo.id, $event)"
-          @keyup.esc ="cancelContent(beforEditCache, todo.id)"
+          @keyup.enter="changeContentI(todo, $event)"
+          @keyup.esc ="cancelContent(todo)"
           class="input-hover"
           />
         </div>
@@ -49,25 +49,39 @@ export default {
   },
   directives: {
     focus: {
-      focus: {
       // directive definition
-        mounted(el) {
-          el.focus()
+        inserted: function (el) {
+        el.focus()
         }
-      }
     }
   },
   methods: {
-    ...mapActions(['doneTodo','deleteTodo','editTodo','changeContent']),
+    ...mapActions(['doneTodo','deleteTodo','editTodo','changeContent','truncate']),
     doneTodoI(id){
       this.doneTodo(id)
     },
-    changeContentI(id,$event){
+    // changeContentI(idTodo,$event){
+    //   // var content = $event.target.value
+    //   var todo = {
+    //       id:idTodo,
+    //       content: c
+          
+    //   }
+    //   this.changeContent(todo)
+    // }
+
+    //c2
+    changeContentI(todo,$event){
+      let newContent = $event.target.value
+      todo.editing = false
+      todo.content = newContent
       
-      var content = $event.target.value
-      this.changeContent(id,content)
+      this.changeContent(todo)
+    },
+    cancelContent(todo){
+      todo.editing = false
+      this.changeContent(todo)
     }
-    
   },
   
 };
@@ -77,6 +91,8 @@ export default {
 .work {
   margin-top: 10px;
   font-size: 20px;
+  
+  
 }
 .work-checkbox {
   // font-size: 24px;
@@ -101,7 +117,10 @@ export default {
 .todo-list{
   background: blanchedalmond;
   border-radius: 10px;
-  padding: 10px;
+  padding: 10px; 
+  padding-left: 30px;
+  max-height: 200px;
+  overflow: auto;
 }
 .input-hover{
   :hover{
