@@ -92,6 +92,7 @@ export default {
   margin-top: 10px;
   font-size: 20px;
   
+  
 }
 .work-checkbox {
   // font-size: 24px;
@@ -117,6 +118,7 @@ export default {
   background: blanchedalmond;
   border-radius: 10px;
   padding: 10px; 
+  padding-left: 30px;
   max-height: 200px;
   overflow: auto;
 }

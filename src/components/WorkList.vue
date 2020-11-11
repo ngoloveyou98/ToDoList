@@ -33,6 +33,9 @@ export default {
     };
   },
   name: "work-list",
+  created(){
+    this.loadTodo()
+  },
   components: {
     work
   },
@@ -40,7 +43,7 @@ export default {
     ...mapGetters(["allTodo"])
   },
   methods: {
-    ...mapActions(["addTodo", "doneAll", "clearAll"]),
+    ...mapActions(["addTodo", "doneAll", "clearAll","loadTodo"]),
     addTodoNew() {
       this.addTodo({
         id: v1(),
@@ -62,6 +65,7 @@ export default {
   height: 400px;
   border: 50px;
   overflow: auto;
+  
   
 }
 .todo-input {
